@@ -19,6 +19,7 @@ import MasterSchedule from './pages/Master/MasterSchedule';
 import MasterStats from './pages/Master/MasterStats';
 import Support from './pages/Admin/Support';
 import ReviewModeration from './pages/Admin/ReviewModeration';
+import JobApplications from './pages/Admin/JobApplications';
 
 const App = () => {
 
@@ -46,6 +47,7 @@ const App = () => {
           <Route path='/master-stats' element={<MasterStats />} />
           <Route path='/support' element={<Support />} />
           <Route path='/review-moderation' element={<ReviewModeration />} />
+          <Route path='/job-applications' element={<JobApplications />} />
         </Routes>
       </div>
     </div>

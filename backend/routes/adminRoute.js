@@ -2,6 +2,7 @@ import express from 'express';
 import { loginAdmin, appointmentsAdmin, appointmentCancel, addMaster, allMasters, adminDashboard, editMaster, archiveMaster, restoreMaster, getMasterById, changeMasterPassword, adminAddPortfolioImage, adminDeletePortfolioImage } from '../controllers/adminController.js';
 import { changeAvailablity } from '../controllers/masterController.js';
 import { getAllReviews, approveReview, adminDeleteReview } from '../controllers/reviewController.js';
+import { getAllJobApplications } from '../controllers/jobApplicationController.js';
 import authAdmin from '../middleware/authAdmin.js';
 import upload from '../middleware/multer.js';
 const adminRouter = express.Router();
@@ -25,5 +26,7 @@ adminRouter.delete("/portfolio/:docId/:imageId", authAdmin, adminDeletePortfolio
 adminRouter.get("/reviews", authAdmin, getAllReviews)
 adminRouter.patch("/reviews/:reviewId/approve", authAdmin, approveReview)
 adminRouter.delete("/reviews/:reviewId", authAdmin, adminDeleteReview)
+
+adminRouter.get("/job-applications", authAdmin, getAllJobApplications)
 
 export default adminRouter;

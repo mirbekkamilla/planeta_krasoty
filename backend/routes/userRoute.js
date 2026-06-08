@@ -1,6 +1,7 @@
 import express from 'express';
 import { loginUser, registerUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay, paymentStripe, verifyStripe, getLoyalty, useBonus, getBonusHistory, rescheduleAppointment, toggleFavorite, getFavorites } from '../controllers/userController.js';
 import { createReview, getMasterReviews, deleteReview, getAllApprovedReviews } from '../controllers/reviewController.js';
+import { submitJobApplication } from '../controllers/jobApplicationController.js';
 import upload from '../middleware/multer.js';
 import authUser from '../middleware/authUser.js';
 const userRouter = express.Router();
@@ -30,5 +31,7 @@ userRouter.get("/reviews", getAllApprovedReviews)
 userRouter.post("/reviews", authUser, createReview)
 userRouter.get("/reviews/:masterId", getMasterReviews)
 userRouter.delete("/reviews/:reviewId", authUser, deleteReview)
+
+userRouter.post("/job-application", submitJobApplication)
 
 export default userRouter;

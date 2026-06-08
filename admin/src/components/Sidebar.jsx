@@ -60,6 +60,12 @@ const Sidebar = ({ isOpen, onClose }) => {
             </svg>
             <p>Отзывы</p>
           </NavLink>
+          <NavLink to={'/job-applications'} className={linkClass}>
+            <svg className='min-w-5 w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={1.8}>
+              <path strokeLinecap='round' strokeLinejoin='round' d='M9 17V7a2 2 0 012-2h6a2 2 0 012 2v10m-10 0a2 2 0 002 2h6a2 2 0 002-2m-10 0H7a2 2 0 01-2-2V9a2 2 0 012-2h2m6 0V5a2 2 0 00-2-2h-0a2 2 0 00-2 2v2m4 0H9' />
+            </svg>
+            <p>Отклики на вакансии</p>
+          </NavLink>
         </ul>}
 
         {mToken && <ul className='text-[#515151] mt-2 md:mt-5' onClick={onClose}>
