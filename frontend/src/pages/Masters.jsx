@@ -70,7 +70,7 @@ const Masters = () => {
               key={index}
             >
               <div className='h-48 bg-[#EAEFFF] overflow-hidden'>
-                <img className='w-full h-full object-contain' src={item.image} alt='' />
+                <img className='w-full h-full object-cover' src={item.image} alt='' />
               </div>
               <div className='p-4 flex flex-col flex-1'>
                 <div className={`flex items-center gap-2 text-sm ${item.available ? 'text-green-500' : 'text-gray-500'}`}>
