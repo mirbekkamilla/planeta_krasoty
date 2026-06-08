@@ -1,0 +1,31 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --dns-result-order=ipv4first server.js",
+    "server": "nodemon --dns-result-order=ipv4first server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.96.0",
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.9",
+    "nodemon": "^3.1.4",
+    "razorpay": "^2.9.4",
+    "socket.io": "^4.8.3",
+    "stripe": "^16.5.0",
+    "validator": "^13.12.0"
+  }
+}
