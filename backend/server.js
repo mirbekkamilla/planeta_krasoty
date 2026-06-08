@@ -10,7 +10,6 @@ import doctorRouter from "./routes/doctorRoute.js"
 import adminRouter from "./routes/adminRoute.js"
 import masterRouter from "./routes/masterRoute.js"
 import chatRouter from "./routes/chatRoute.js"
-import aiRouter from "./routes/aiRoute.js"
 import chatModel from "./models/chatModel.js"
 
 // app config
@@ -33,7 +32,6 @@ app.use("/api/admin", adminRouter)
 app.use("/api/doctor", doctorRouter)
 app.use("/api/master", masterRouter)
 app.use("/api/chat", chatRouter)
-app.use("/api/ai", aiRouter)
 
 app.get("/", (req, res) => {
     res.send("API Working")

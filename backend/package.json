@@ -11,7 +11,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.96.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.3.0",
     "cors": "^2.8.5",
