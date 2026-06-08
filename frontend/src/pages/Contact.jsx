@@ -13,9 +13,9 @@ const Contact = () => {
         <img className='w-full md:max-w-[360px]' src={assets.contact_image} alt="" />
         <div className='flex flex-col justify-center items-start gap-6'>
           <p className='font-semibold text-lg text-gray-600'>НАШ САЛОН</p>
-          <p className='text-gray-500'>ул. Пушкина, д. 10 <br /> Салон красоты «Glamour», 2 этаж</p>
-          <p className='text-gray-500'>Тел: +7 (800) 123-45-67 <br /> Email: salon@glamour.ru</p>
-          <p className='font-semibold text-lg text-gray-600'>РАБОТА В «GLAMOUR»</p>
+          <p className='text-gray-500'>ул. Пушкина, д. 10 <br /> Салон красоты «Планета красоты», 2 этаж</p>
+          <p className='text-gray-500'>Тел: +7 (800) 123-45-67 <br /> Email: planeta-krasoty@salon.ru</p>
+          <p className='font-semibold text-lg text-gray-600'>РАБОТА В «ПЛАНЕТА КРАСОТЫ»</p>
           <p className='text-gray-500'>Мы всегда рады талантливым мастерам в нашу команду.</p>
           <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'>Открытые вакансии</button>
         </div>
