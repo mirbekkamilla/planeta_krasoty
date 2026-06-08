@@ -8,7 +8,7 @@ const TopMasters = () => {
     const { masters } = useContext(AppContext)
 
     return (
-        <div className='flex flex-col items-center gap-4 mt-8 mb-16 text-[#262626] md:mx-10'>
+        <div className='flex flex-col items-center gap-4 mt-8 mb-8 md:mb-16 text-[#262626] md:mx-10'>
             <h1 className='text-3xl font-medium'>Лучшие мастера салона</h1>
             <p className='sm:w-1/3 text-center text-sm'>Познакомьтесь с нашими специалистами и выберите мастера по вашему вкусу.</p>
             <div className='w-full grid grid-cols-auto gap-4 pt-5 gap-y-6 px-3 sm:px-0'>
