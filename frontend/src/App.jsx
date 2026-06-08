@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify'
 import Reviews from './pages/Reviews'
 import MyFavorites from './pages/MyFavorites'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
         <Route path='/verify' element={<Verify />} />
         <Route path='/reviews' element={<Reviews />} />
         <Route path='/my-favorites' element={<MyFavorites />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
       </Routes>
       <Footer />
       <ChatWidget />

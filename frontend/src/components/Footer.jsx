@@ -1,7 +1,16 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
 
 const Footer = () => {
+
+  const navigate = useNavigate()
+
+  const goTo = (path) => {
+    navigate(path)
+    scrollTo(0, 0)
+  }
+
   return (
     <div className='md:mx-10'>
       <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-16 md:mt-40 text-sm'>
@@ -14,18 +23,18 @@ const Footer = () => {
         <div>
           <p className='text-xl font-medium mb-5'>НАВИГАЦИЯ</p>
           <ul className='flex flex-col gap-2 text-gray-600'>
-            <li>Главная</li>
-            <li>О нас</li>
-            <li>Мастера</li>
-            <li>Политика конфиденциальности</li>
+            <li onClick={() => goTo('/')} className='cursor-pointer hover:text-[#262626] transition-colors w-fit'>Главная</li>
+            <li onClick={() => goTo('/about')} className='cursor-pointer hover:text-[#262626] transition-colors w-fit'>О нас</li>
+            <li onClick={() => goTo('/masters')} className='cursor-pointer hover:text-[#262626] transition-colors w-fit'>Мастера</li>
+            <li onClick={() => goTo('/privacy-policy')} className='cursor-pointer hover:text-[#262626] transition-colors w-fit'>Политика конфиденциальности</li>
           </ul>
         </div>
 
         <div>
           <p className='text-xl font-medium mb-5'>КОНТАКТЫ</p>
           <ul className='flex flex-col gap-2 text-gray-600'>
-            <li>+7 (800) 123-45-67</li>
-            <li>planeta-krasoty@salon.ru</li>
+            <li><a href='tel:+78001234567' className='hover:text-[#262626] transition-colors'>+7 (800) 123-45-67</a></li>
+            <li><a href='mailto:planeta-krasoty@salon.ru' className='hover:text-[#262626] transition-colors'>planeta-krasoty@salon.ru</a></li>
           </ul>
           <div className='flex items-center gap-4 mt-5 text-gray-600'>
             <a href='https://instagram.com' target='_blank' rel='noopener noreferrer' aria-label='Instagram' className='hover:text-[#262626] transition-colors'>
