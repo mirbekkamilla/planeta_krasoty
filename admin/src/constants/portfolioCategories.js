@@ -9,6 +9,8 @@ const PORTFOLIO_CATEGORIES_BY_SPECIALITY = {
   'Лешмейкер': ['Наращивание ресниц', 'Ламинирование ресниц', 'Снятие ресниц', 'Окрашивание ресниц']
 }
 
+export const CUSTOM_PORTFOLIO_CATEGORY = '__custom__'
+
 export const getPortfolioCategories = (speciality) => [
   ...(PORTFOLIO_CATEGORIES_BY_SPECIALITY[speciality] || []),
   'Прочее'

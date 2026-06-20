@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AdminContext } from '../../context/AdminContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { getPortfolioCategories } from '../../constants/portfolioCategories'
+import { CUSTOM_PORTFOLIO_CATEGORY, getPortfolioCategories } from '../../constants/portfolioCategories'
 
 const EditMaster = () => {
   const { docId } = useParams()
@@ -24,6 +24,7 @@ const EditMaster = () => {
   const [uploadingImage, setUploadingImage] = useState(false)
   const [newPortfolioImage, setNewPortfolioImage] = useState(null)
   const [newPortfolioCategory, setNewPortfolioCategory] = useState('Прочее')
+  const [customPortfolioCategory, setCustomPortfolioCategory] = useState('')
   const [newPortfolioDescription, setNewPortfolioDescription] = useState('')
   const [deletingImageId, setDeletingImageId] = useState('')
   const portfolioFileInputRef = useRef(null)
@@ -125,12 +126,16 @@ const EditMaster = () => {
   const uploadPortfolioImage = async (e) => {
     e.preventDefault()
     if (!newPortfolioImage) return toast.error('Выберите изображение')
+    const category = newPortfolioCategory === CUSTOM_PORTFOLIO_CATEGORY
+      ? customPortfolioCategory.trim()
+      : newPortfolioCategory
+    if (!category) return toast.error('Введите название категории')
     setUploadingImage(true)
     try {
       const formData = new FormData()
       formData.append('docId', docId)
       formData.append('image', newPortfolioImage)
-      formData.append('category', newPortfolioCategory)
+      formData.append('category', category)
       formData.append('description', newPortfolioDescription)
 
       const { data } = await axios.post(backendUrl + '/api/admin/portfolio', formData, {
@@ -141,6 +146,8 @@ const EditMaster = () => {
         toast.success(data.message)
         setNewPortfolioImage(null)
         setNewPortfolioDescription('')
+        setNewPortfolioCategory('Прочее')
+        setCustomPortfolioCategory('')
         if (portfolioFileInputRef.current) portfolioFileInputRef.current.value = ''
         fetchPortfolio()
       } else {
@@ -473,7 +480,18 @@ const EditMaster = () => {
                 className='border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-primary bg-white'
               >
                 {getPortfolioCategories(editData?.speciality).map(c => <option key={c} value={c}>{c}</option>)}
+                <option value={CUSTOM_PORTFOLIO_CATEGORY}>+ Своя категория</option>
               </select>
+              {newPortfolioCategory === CUSTOM_PORTFOLIO_CATEGORY && (
+                <input
+                  type='text'
+                  value={customPortfolioCategory}
+                  onChange={e => setCustomPortfolioCategory(e.target.value)}
+                  maxLength={60}
+                  placeholder='Введите название категории'
+                  className='border border-primary rounded-lg px-3 py-2 text-sm outline-none bg-white'
+                />
+              )}
               <input
                 type='text'
                 value={newPortfolioDescription}

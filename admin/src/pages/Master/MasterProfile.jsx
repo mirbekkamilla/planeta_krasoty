@@ -3,7 +3,7 @@ import { MasterContext } from '../../context/MasterContext'
 import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { getPortfolioCategories } from '../../constants/portfolioCategories'
+import { CUSTOM_PORTFOLIO_CATEGORY, getPortfolioCategories } from '../../constants/portfolioCategories'
 
 const MasterProfile = () => {
 
@@ -16,6 +16,7 @@ const MasterProfile = () => {
     const [uploading, setUploading] = useState(false)
     const [newImage, setNewImage] = useState(null)
     const [newCategory, setNewCategory] = useState('Прочее')
+    const [customCategory, setCustomCategory] = useState('')
     const [newDescription, setNewDescription] = useState('')
     const [deletingId, setDeletingId] = useState('')
     const fileInputRef = useRef(null)
@@ -57,11 +58,15 @@ const MasterProfile = () => {
     const uploadImage = async (e) => {
         e.preventDefault()
         if (!newImage) return toast.error('Выберите изображение')
+        const category = newCategory === CUSTOM_PORTFOLIO_CATEGORY
+            ? customCategory.trim()
+            : newCategory
+        if (!category) return toast.error('Введите название категории')
         setUploading(true)
         try {
             const formData = new FormData()
             formData.append('image', newImage)
-            formData.append('category', newCategory)
+            formData.append('category', category)
             formData.append('description', newDescription)
 
             const { data } = await axios.post(backendUrl + '/api/master/portfolio', formData, {
@@ -72,6 +77,8 @@ const MasterProfile = () => {
                 toast.success(data.message)
                 setNewImage(null)
                 setNewDescription('')
+                setNewCategory('Прочее')
+                setCustomCategory('')
                 if (fileInputRef.current) fileInputRef.current.value = ''
                 fetchPortfolio()
             } else {
@@ -284,7 +291,18 @@ const MasterProfile = () => {
                                 className='border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-primary bg-white'
                             >
                                 {getPortfolioCategories(profileData?.speciality).map(c => <option key={c} value={c}>{c}</option>)}
+                                <option value={CUSTOM_PORTFOLIO_CATEGORY}>+ Своя категория</option>
                             </select>
+                            {newCategory === CUSTOM_PORTFOLIO_CATEGORY && (
+                                <input
+                                    type='text'
+                                    value={customCategory}
+                                    onChange={e => setCustomCategory(e.target.value)}
+                                    maxLength={60}
+                                    placeholder='Введите название категории'
+                                    className='border border-primary rounded-lg px-3 py-2 text-sm outline-none bg-white'
+                                />
+                            )}
                             <input
                                 type='text'
                                 value={newDescription}
