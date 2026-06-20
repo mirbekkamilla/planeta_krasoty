@@ -6,8 +6,6 @@ import RelatedMasters from '../components/RelatedMasters'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const portfolioCategories = ['Все работы', 'Окрашивание', 'Стрижки', 'Укладки', 'Уход', 'Прочее']
-
 const DEFAULT_SERVICES_BY_SPECIALITY = {
   'Парикмахер':      ['Стрижки', 'Окрашивание', 'Укладки', 'Уход за волосами'],
   'Мастер маникюра': ['Маникюр', 'Покрытие гель-лак', 'Наращивание ногтей', 'Уход за руками'],
@@ -253,6 +251,11 @@ const Appointment = () => {
   const filteredPortfolio = portfolio.filter(item =>
     portfolioFilter === 'Все работы' || item.category === portfolioFilter
   )
+
+  const portfolioCategories = [
+    'Все работы',
+    ...new Set(portfolio.map(item => item.category).filter(Boolean))
+  ]
 
   const rating = docInfo?.rating || 0
   const reviewCount = docInfo?.reviewCount || 0

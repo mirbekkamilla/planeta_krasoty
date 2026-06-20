@@ -3,8 +3,7 @@ import { MasterContext } from '../../context/MasterContext'
 import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-
-const CATEGORIES = ['Окрашивание', 'Стрижки', 'Укладки', 'Уход', 'Маникюр', 'Педикюр', 'Прочее']
+import { getPortfolioCategories } from '../../constants/portfolioCategories'
 
 const MasterProfile = () => {
 
@@ -284,7 +283,7 @@ const MasterProfile = () => {
                                 onChange={e => setNewCategory(e.target.value)}
                                 className='border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-primary bg-white'
                             >
-                                {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                                {getPortfolioCategories(profileData?.speciality).map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
                             <input
                                 type='text'

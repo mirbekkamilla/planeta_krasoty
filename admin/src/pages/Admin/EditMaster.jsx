@@ -3,8 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AdminContext } from '../../context/AdminContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-
-const PORTFOLIO_CATEGORIES = ['Окрашивание', 'Стрижки', 'Укладки', 'Уход', 'Маникюр', 'Педикюр', 'Прочее']
+import { getPortfolioCategories } from '../../constants/portfolioCategories'
 
 const EditMaster = () => {
   const { docId } = useParams()
@@ -473,7 +472,7 @@ const EditMaster = () => {
                 onChange={e => setNewPortfolioCategory(e.target.value)}
                 className='border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-primary bg-white'
               >
-                {PORTFOLIO_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                {getPortfolioCategories(editData?.speciality).map(c => <option key={c} value={c}>{c}</option>)}
               </select>
               <input
                 type='text'
