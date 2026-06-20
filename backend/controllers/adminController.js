@@ -130,7 +130,7 @@ const adminDashboard = async (req, res) => {
         const appointments = await appointmentModel.find({})
 
         const dashData = {
-            doctors: masters.length,
+            masters: masters.length,
             appointments: appointments.length,
             patients: users.length,
             latestAppointments: appointments.reverse()
@@ -246,7 +246,7 @@ const getMasterById = async (req, res) => {
     try {
         const { docId } = req.body
         const master = await masterModel.findById(docId).select('-password')
-        res.json({ success: true, doctor: master })
+        res.json({ success: true, master })
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })

@@ -48,5 +48,6 @@ const masterSchema = new mongoose.Schema({
     },
 }, { minimize: false })
 
-const masterModel = mongoose.models.doctor || mongoose.model("doctor", masterSchema);
+// Keep the existing collection name so deployed master records remain available.
+const masterModel = mongoose.models.Master || mongoose.model("Master", masterSchema, "doctors");
 export default masterModel;

@@ -224,9 +224,9 @@ const cancelAppointment = async (req, res) => {
         // releasing master slot
         const { docId, slotDate, slotTime } = appointmentData
 
-        const doctorData = await masterModel.findById(docId)
+        const masterData = await masterModel.findById(docId)
 
-        let slots_booked = doctorData.slots_booked
+        let slots_booked = masterData.slots_booked
 
         slots_booked[slotDate] = slots_booked[slotDate].filter(e => e !== slotTime)
 

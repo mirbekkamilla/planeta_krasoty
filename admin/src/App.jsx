@@ -9,7 +9,7 @@ import Sidebar from './components/Sidebar'
 import Dashboard from './pages/Admin/Dashboard';
 import AllAppointments from './pages/Admin/AllAppointments';
 import AddMaster from './pages/Admin/AddMaster';
-import MastersList from './pages/Admin/DoctorsList';
+import MastersList from './pages/Admin/MastersList';
 import EditMaster from './pages/Admin/EditMaster';
 import Login from './pages/Login';
 import MasterAppointments from './pages/Master/MasterAppointments';

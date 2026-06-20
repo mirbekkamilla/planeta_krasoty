@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AdminContext } from '../../context/AdminContext'
 
-const DoctorsList = () => {
+const MastersList = () => {
 
   const { masters, changeAvailability, aToken, getAllMasters, archiveMaster, restoreMaster } = useContext(AdminContext)
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ const DoctorsList = () => {
     }
   }, [aToken])
 
-  const filteredDoctors = masters.filter(doc => {
+  const filteredMasters = masters.filter(doc => {
     if (filter === 'active') return !doc.archived
     if (filter === 'archived') return doc.archived
     return true
@@ -61,7 +61,7 @@ const DoctorsList = () => {
       </div>
 
       <div className='w-full flex flex-wrap gap-4 pt-2 gap-y-6'>
-        {filteredDoctors.map((item, index) => (
+        {filteredMasters.map((item, index) => (
           <div className={`border rounded-xl w-56 overflow-hidden cursor-pointer group flex flex-col ${item.archived ? 'border-gray-300 opacity-75' : 'border-[#C9D8FF]'}`} key={index}>
             <div className='h-56 overflow-hidden bg-[#EAEFFF] relative'>
               <img className='w-full h-full object-cover group-hover:scale-105 transition-all duration-500' src={item.image} alt="" />
@@ -113,7 +113,7 @@ const DoctorsList = () => {
         ))}
       </div>
 
-      {filteredDoctors.length === 0 && (
+      {filteredMasters.length === 0 && (
         <p className='text-gray-400 text-center py-10'>
           {filter === 'archived' ? 'Нет архивных мастеров' : 'Нет мастеров'}
         </p>
@@ -147,4 +147,4 @@ const DoctorsList = () => {
   )
 }
 
-export default DoctorsList
+export default MastersList

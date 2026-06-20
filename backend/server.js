@@ -6,7 +6,6 @@ import { Server } from 'socket.io'
 import connectDB from "./config/mongodb.js"
 import connectCloudinary from "./config/cloudinary.js"
 import userRouter from "./routes/userRoute.js"
-import doctorRouter from "./routes/doctorRoute.js"
 import adminRouter from "./routes/adminRoute.js"
 import masterRouter from "./routes/masterRoute.js"
 import chatRouter from "./routes/chatRoute.js"
@@ -29,7 +28,6 @@ app.use(cors())
 // api endpoints
 app.use("/api/user", userRouter)
 app.use("/api/admin", adminRouter)
-app.use("/api/doctor", doctorRouter)
 app.use("/api/master", masterRouter)
 app.use("/api/chat", chatRouter)
 

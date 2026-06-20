@@ -37,7 +37,7 @@ const EditMaster = () => {
     try {
       const { data } = await axios.post(backendUrl + '/api/admin/get-master', { docId }, { headers: { aToken } })
       if (data.success) {
-        const d = data.doctor
+        const d = data.master
         setEditData({
           docId: d._id,
           name: d.name,

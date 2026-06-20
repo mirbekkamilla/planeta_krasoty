@@ -3,7 +3,7 @@ import admin_logo from './admin_logo.svg'
 import logo from './logo.jpg'
 import appointment_icon from './appointment_icon.svg'
 import cancel_icon from './cancel_icon.svg'
-import doctor_icon from './doctor_icon.svg'
+import master_icon from './master_icon.svg'
 import home_icon from './home_icon.svg'
 import people_icon from './people_icon.svg'
 import upload_area from './upload_area.svg'
@@ -19,7 +19,7 @@ export const assets = {
     logo,
     appointment_icon,
     cancel_icon,
-    doctor_icon,
+    master_icon,
     upload_area,
     home_icon,
     patients_icon,
