@@ -21,6 +21,7 @@ const Masters = () => {
   const { speciality } = useParams()
   const [filterMaster, setFilterMaster] = useState([])
   const [showFilter, setShowFilter] = useState(false)
+  const [minRating, setMinRating] = useState(0)
   const navigate = useNavigate()
   const { masters } = useContext(AppContext)
 
@@ -29,12 +30,16 @@ const Masters = () => {
       ? masters.filter(master => master.speciality === speciality)
       : [...masters]
 
+    if (minRating > 0) {
+      list = list.filter(master => Number(master.rating || 0) >= minRating)
+    }
+
     setFilterMaster(list)
   }
 
   useEffect(() => {
     applyFilter()
-  }, [masters, speciality])
+  }, [masters, speciality, minRating])
 
   return (
     <div>
@@ -58,16 +63,32 @@ const Masters = () => {
             <p onClick={() => speciality === 'Бровист' ? navigate('/masters') : navigate('/masters/Бровист')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Бровист' ? 'bg-[#E2E5FF] text-black' : ''}`}>Бровист</p>
             <p onClick={() => speciality === 'Косметолог' ? navigate('/masters') : navigate('/masters/Косметолог')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Косметолог' ? 'bg-[#E2E5FF] text-black' : ''}`}>Косметолог</p>
 
+            <div className='pt-2'>
+              <label htmlFor='rating-filter' className='block mb-2 font-medium text-gray-700'>
+                Рейтинг
+              </label>
+              <select
+                id='rating-filter'
+                value={minRating}
+                onChange={(event) => setMinRating(Number(event.target.value))}
+                className='w-[94vw] sm:w-full px-3 py-2 border border-gray-300 rounded bg-white text-gray-700 outline-none focus:border-primary'
+              >
+                <option value={0}>Любой рейтинг</option>
+                <option value={4}>4 и выше</option>
+                <option value={3}>3 и выше</option>
+                <option value={2}>2 и выше</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Master cards grid */}
         <div className='w-full grid grid-cols-auto gap-4 gap-y-6'>
-          {filterMaster.map((item, index) => (
+          {filterMaster.map((item) => (
             <div
               onClick={() => { navigate(`/appointment/${item._id}`); scrollTo(0, 0) }}
               className='border border-[#C9D8FF] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500 flex flex-col'
-              key={index}
+              key={item._id}
             >
               <div className='h-48 bg-[#EAEFFF] overflow-hidden'>
                 <img className='w-full h-full object-contain sm:object-cover' src={item.image} alt='' />
@@ -91,6 +112,11 @@ const Masters = () => {
               </div>
             </div>
           ))}
+          {filterMaster.length === 0 && (
+            <p className='col-span-full py-10 text-center text-gray-500'>
+              Мастера с выбранными параметрами не найдены
+            </p>
+          )}
         </div>
       </div>
     </div>
