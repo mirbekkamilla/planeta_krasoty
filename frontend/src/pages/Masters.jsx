@@ -2,6 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { useNavigate, useParams } from 'react-router-dom'
 
+const SPECIALITIES = ['Парикмахер', 'Мастер маникюра', 'Мастер педикюра', 'Визажист', 'Бровист', 'Косметолог']
+const RATING_FILTERS = [
+  { value: 0, label: 'Все' },
+  { value: 4, label: '4+' },
+  { value: 3, label: '3+' },
+  { value: 2, label: '2+' }
+]
+
 const StarRating = ({ rating }) => (
   <div className='flex items-center gap-0.5'>
     {[1, 2, 3, 4, 5].map((star) => (
@@ -41,53 +49,79 @@ const Masters = () => {
     applyFilter()
   }, [masters, speciality, minRating])
 
+  const toggleSpeciality = (value) => {
+    navigate(speciality === value ? '/masters' : `/masters/${value}`)
+  }
+
+  const resetFilters = () => {
+    setMinRating(0)
+    navigate('/masters')
+  }
+
   return (
     <div>
       <p className='text-gray-600'>Выберите специалиста по нужному направлению.</p>
       <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
 
         {/* Filters sidebar */}
-        <div className='flex flex-col gap-3 flex-shrink-0'>
+        <div className='w-full sm:w-60 flex-shrink-0'>
           <button
             onClick={() => setShowFilter(!showFilter)}
-            className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'bg-primary text-white' : ''}`}
+            className={`w-full py-2.5 px-4 border rounded-xl text-sm font-medium transition-all sm:hidden ${showFilter ? 'bg-primary border-primary text-white' : 'border-gray-200 text-gray-700'}`}
           >
             Фильтры
           </button>
 
-          <div className={`flex-col gap-4 text-sm text-gray-600 ${showFilter ? 'flex' : 'hidden sm:flex'}`}>
-            <p onClick={() => speciality === 'Парикмахер' ? navigate('/masters') : navigate('/masters/Парикмахер')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Парикмахер' ? 'bg-[#E2E5FF] text-black' : ''}`}>Парикмахер</p>
-            <p onClick={() => speciality === 'Мастер маникюра' ? navigate('/masters') : navigate('/masters/Мастер маникюра')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Мастер маникюра' ? 'bg-[#E2E5FF] text-black' : ''}`}>Мастер маникюра</p>
-            <p onClick={() => speciality === 'Мастер педикюра' ? navigate('/masters') : navigate('/masters/Мастер педикюра')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Мастер педикюра' ? 'bg-[#E2E5FF] text-black' : ''}`}>Мастер педикюра</p>
-            <p onClick={() => speciality === 'Визажист' ? navigate('/masters') : navigate('/masters/Визажист')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Визажист' ? 'bg-[#E2E5FF] text-black' : ''}`}>Визажист</p>
-            <p onClick={() => speciality === 'Бровист' ? navigate('/masters') : navigate('/masters/Бровист')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Бровист' ? 'bg-[#E2E5FF] text-black' : ''}`}>Бровист</p>
-            <p onClick={() => speciality === 'Косметолог' ? navigate('/masters') : navigate('/masters/Косметолог')} className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === 'Косметолог' ? 'bg-[#E2E5FF] text-black' : ''}`}>Косметолог</p>
-
-            <div className='pt-2'>
-              <label htmlFor='rating-filter' className='block mb-2 font-medium text-gray-700'>
-                Рейтинг
-              </label>
-              <select
-                id='rating-filter'
-                value={minRating}
-                onChange={(event) => setMinRating(Number(event.target.value))}
-                className='w-[94vw] sm:w-full px-3 py-2 border border-gray-300 rounded bg-white text-gray-700 outline-none focus:border-primary'
-              >
-                <option value={0}>Любой рейтинг</option>
-                <option value={4}>4 и выше</option>
-                <option value={3}>3 и выше</option>
-                <option value={2}>2 и выше</option>
-              </select>
+          <div className={`${showFilter ? 'block' : 'hidden'} sm:block mt-3 sm:mt-0 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm`}>
+            <p className='mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400'>Направление</p>
+            <div className='flex flex-col gap-1.5'>
+              {SPECIALITIES.map((value) => (
+                <button
+                  key={value}
+                  type='button'
+                  onClick={() => toggleSpeciality(value)}
+                  className={`w-full rounded-xl px-3 py-2.5 text-left text-sm transition-all ${speciality === value ? 'bg-primary text-white shadow-sm' : 'text-gray-600 hover:bg-[#F2F4FF] hover:text-primary'}`}
+                >
+                  {value}
+                </button>
+              ))}
             </div>
+
+            <div className='my-4 h-px bg-gray-100' />
+
+            <p className='mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400'>Рейтинг</p>
+            <div className='grid grid-cols-4 gap-2'>
+              {RATING_FILTERS.map(({ value, label }) => (
+                <button
+                  key={value}
+                  type='button'
+                  onClick={() => setMinRating(value)}
+                  className={`flex items-center justify-center gap-1 rounded-lg border py-2 text-xs font-medium transition-all ${minRating === value ? 'border-primary bg-primary text-white shadow-sm' : 'border-gray-200 text-gray-600 hover:border-primary hover:text-primary'}`}
+                >
+                  {value > 0 && <span className='text-yellow-400'>★</span>}
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {(speciality || minRating > 0) && (
+              <button type='button' onClick={resetFilters} className='mt-4 w-full text-xs text-gray-400 transition-colors hover:text-primary'>
+                Сбросить фильтры
+              </button>
+            )}
           </div>
         </div>
 
         {/* Master cards grid */}
-        <div className='w-full grid grid-cols-auto gap-4 gap-y-6'>
-          {filterMaster.map((item) => (
+        <div className='w-full min-w-0'>
+          <div className='mb-3 flex items-center justify-between'>
+            <p className='text-sm text-gray-500'>Найдено мастеров: <span className='font-medium text-gray-800'>{filterMaster.length}</span></p>
+          </div>
+          <div className='grid grid-cols-auto gap-4 gap-y-6'>
+            {filterMaster.map((item) => (
             <div
               onClick={() => { navigate(`/appointment/${item._id}`); scrollTo(0, 0) }}
-              className='border border-[#C9D8FF] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500 flex flex-col'
+              className='border border-[#E1E5FF] rounded-2xl overflow-hidden cursor-pointer bg-white shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col'
               key={item._id}
             >
               <div className='h-48 bg-[#EAEFFF] overflow-hidden'>
@@ -111,12 +145,14 @@ const Masters = () => {
                 )}
               </div>
             </div>
-          ))}
-          {filterMaster.length === 0 && (
-            <p className='col-span-full py-10 text-center text-gray-500'>
-              Мастера с выбранными параметрами не найдены
-            </p>
-          )}
+            ))}
+            {filterMaster.length === 0 && (
+              <div className='col-span-full rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-16 text-center'>
+                <p className='text-gray-500'>Мастера с выбранными параметрами не найдены</p>
+                <button type='button' onClick={resetFilters} className='mt-3 text-sm font-medium text-primary hover:underline'>Сбросить фильтры</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
