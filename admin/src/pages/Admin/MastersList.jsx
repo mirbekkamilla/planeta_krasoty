@@ -61,8 +61,8 @@ const MastersList = () => {
       </div>
 
       <div className='w-full flex flex-wrap gap-4 pt-2 gap-y-6'>
-        {filteredMasters.map((item, index) => (
-          <div className={`border rounded-xl w-56 overflow-hidden cursor-pointer group flex flex-col ${item.archived ? 'border-gray-300 opacity-75' : 'border-[#C9D8FF]'}`} key={index}>
+        {filteredMasters.map((item) => (
+          <div className={`border rounded-xl w-56 overflow-hidden cursor-pointer group flex flex-col ${item.archived ? 'border-gray-300 opacity-75' : 'border-[#C9D8FF]'}`} key={item._id}>
             <div className='h-56 overflow-hidden bg-[#EAEFFF] relative'>
               <img className='w-full h-full object-cover group-hover:scale-105 transition-all duration-500' src={item.image} alt="" />
               {item.archived && (

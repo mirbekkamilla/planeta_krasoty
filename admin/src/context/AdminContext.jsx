@@ -56,8 +56,10 @@ const AdminContextProvider = (props) => {
         try {
             const { data } = await axios.post(backendUrl + '/api/admin/archive-master', { docId }, { headers: { aToken } })
             if (data.success) {
+                setMasters(currentMasters => currentMasters.map(master =>
+                    master._id === docId ? data.master : master
+                ))
                 toast.success(data.message)
-                getAllMasters()
             } else {
                 toast.error(data.message)
             }
@@ -72,8 +74,10 @@ const AdminContextProvider = (props) => {
         try {
             const { data } = await axios.post(backendUrl + '/api/admin/restore-master', { docId }, { headers: { aToken } })
             if (data.success) {
+                setMasters(currentMasters => currentMasters.map(master =>
+                    master._id === docId ? data.master : master
+                ))
                 toast.success(data.message)
-                getAllMasters()
             } else {
                 toast.error(data.message)
             }

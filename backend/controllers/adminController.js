@@ -189,8 +189,17 @@ const archiveMaster = async (req, res) => {
             return res.json({ success: false, message: "Master ID required" })
         }
 
-        await masterModel.findByIdAndUpdate(docId, { archived: true, available: false })
-        res.json({ success: true, message: 'Мастер архивирован' })
+        const master = await masterModel.findByIdAndUpdate(
+            docId,
+            { archived: true, available: false },
+            { new: true }
+        ).select('-password')
+
+        if (!master) {
+            return res.json({ success: false, message: 'Master not found' })
+        }
+
+        res.json({ success: true, message: 'Мастер архивирован', master })
 
     } catch (error) {
         console.log(error)
@@ -207,8 +216,17 @@ const restoreMaster = async (req, res) => {
             return res.json({ success: false, message: "Master ID required" })
         }
 
-        await masterModel.findByIdAndUpdate(docId, { archived: false, available: true })
-        res.json({ success: true, message: 'Мастер восстановлен' })
+        const master = await masterModel.findByIdAndUpdate(
+            docId,
+            { archived: false, available: true },
+            { new: true }
+        ).select('-password')
+
+        if (!master) {
+            return res.json({ success: false, message: 'Master not found' })
+        }
+
+        res.json({ success: true, message: 'Мастер восстановлен', master })
 
     } catch (error) {
         console.log(error)
