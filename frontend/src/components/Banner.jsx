@@ -28,7 +28,7 @@ const Banner = () => {
 
             {/* ------- Right Side ------- */}
             <div className='hidden md:block md:w-1/2 lg:w-[370px] relative'>
-                <img className='absolute bottom-[-8px] right-0 w-full max-w-[380px] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_7%,black_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,black_7%,black_100%)] drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={appointmentImage} alt='Мастер салона красоты' />
+                <img className='absolute inset-y-0 right-0 h-full w-auto max-w-none drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={appointmentImage} alt='Мастер салона красоты' />
             </div>
         </div>
     )
