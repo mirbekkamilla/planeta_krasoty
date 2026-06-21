@@ -61,6 +61,12 @@ const Sidebar = ({ isOpen, onClose }) => {
             <img className='min-w-5' src={assets.people_icon} alt='' />
             <p>Все мастера</p>
           </NavLink>
+          <NavLink to={'/categories'} className={linkClass}>
+            <svg className='min-w-5 w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={1.8}>
+              <path strokeLinecap='round' strokeLinejoin='round' d='M4 6.5A2.5 2.5 0 016.5 4h3A2.5 2.5 0 0112 6.5v3A2.5 2.5 0 019.5 12h-3A2.5 2.5 0 014 9.5v-3zm8 8A2.5 2.5 0 0114.5 12h3a2.5 2.5 0 012.5 2.5v3a2.5 2.5 0 01-2.5 2.5h-3a2.5 2.5 0 01-2.5-2.5v-3zM14.5 4h3A2.5 2.5 0 0120 6.5v3a2.5 2.5 0 01-2.5 2.5h-3A2.5 2.5 0 0112 9.5v-3A2.5 2.5 0 0114.5 4zM6.5 12h3a2.5 2.5 0 012.5 2.5v3A2.5 2.5 0 019.5 20h-3A2.5 2.5 0 014 17.5v-3A2.5 2.5 0 016.5 12z' />
+            </svg>
+            <p>Категории</p>
+          </NavLink>
           <NavLink to={'/support'} className={linkClass}>
             <svg className='min-w-5 w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={1.8}>
               <path strokeLinecap='round' strokeLinejoin='round' d='M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z' />

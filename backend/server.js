@@ -9,6 +9,7 @@ import userRouter from "./routes/userRoute.js"
 import adminRouter from "./routes/adminRoute.js"
 import masterRouter from "./routes/masterRoute.js"
 import chatRouter from "./routes/chatRoute.js"
+import categoryRouter from "./routes/categoryRoute.js"
 import chatModel from "./models/chatModel.js"
 
 // app config
@@ -30,6 +31,7 @@ app.use("/api/user", userRouter)
 app.use("/api/admin", adminRouter)
 app.use("/api/master", masterRouter)
 app.use("/api/chat", chatRouter)
+app.use("/api/category", categoryRouter)
 
 app.get("/", (req, res) => {
     res.send("API Working")

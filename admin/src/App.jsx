@@ -20,6 +20,7 @@ import MasterStats from './pages/Master/MasterStats';
 import Support from './pages/Admin/Support';
 import ReviewModeration from './pages/Admin/ReviewModeration';
 import JobApplications from './pages/Admin/JobApplications';
+import Categories from './pages/Admin/Categories';
 
 const App = () => {
 
@@ -48,6 +49,7 @@ const App = () => {
           <Route path='/support' element={<Support />} />
           <Route path='/review-moderation' element={<ReviewModeration />} />
           <Route path='/job-applications' element={<JobApplications />} />
+          <Route path='/categories' element={<Categories />} />
         </Routes>
       </div>
     </div>

@@ -4,8 +4,11 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 import { AdminContext } from '../../context/AdminContext'
 import { AppContext } from '../../context/AppContext'
+import useCategories from '../../hooks/useCategories'
 
 const AddMaster = () => {
+
+    const categories = useCategories()
 
     const [masterImg, setMasterImg] = useState(false)
     const [name, setName] = useState('')
@@ -174,14 +177,7 @@ const AddMaster = () => {
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Специализация</p>
                             <select onChange={e => setSpeciality(e.target.value)} value={speciality} className='border rounded px-2 py-2'>
-                                <option value="Парикмахер">Парикмахер</option>
-                                <option value="Мастер маникюра">Мастер маникюра</option>
-                                <option value="Мастер педикюра">Мастер педикюра</option>
-                                <option value="Визажист">Визажист</option>
-                                <option value="Бровист">Бровист</option>
-                                <option value="Косметолог">Косметолог</option>
-                                <option value="Массажист">Массажист</option>
-                                <option value="Лешмейкер">Лешмейкер</option>
+                                {categories.map(category => <option key={category} value={category}>{category}</option>)}
                             </select>
                         </div>
 

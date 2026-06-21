@@ -4,8 +4,10 @@ import { AdminContext } from '../../context/AdminContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { CUSTOM_PORTFOLIO_CATEGORY, getPortfolioCategories } from '../../constants/portfolioCategories'
+import useCategories from '../../hooks/useCategories'
 
 const EditMaster = () => {
+  const categories = useCategories()
   const { docId } = useParams()
   const navigate = useNavigate()
   const { aToken, backendUrl, editMaster } = useContext(AdminContext)
@@ -309,7 +311,7 @@ const EditMaster = () => {
               value={editData.speciality}
               onChange={(e) => setEditData({ ...editData, speciality: e.target.value })}
             >
-              {['Парикмахер','Мастер маникюра','Мастер педикюра','Визажист','Бровист','Косметолог'].map(s => (
+              {categories.map(s => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { useNavigate, useParams } from 'react-router-dom'
 
-const SPECIALITIES = ['Парикмахер', 'Мастер маникюра', 'Мастер педикюра', 'Визажист', 'Бровист', 'Косметолог']
+const FALLBACK_SPECIALITIES = ['Парикмахер', 'Мастер маникюра', 'Мастер педикюра', 'Визажист', 'Бровист', 'Косметолог']
 const RATING_FILTERS = [
   { value: 0, label: 'Все' },
   { value: 4, label: '4+' },
@@ -31,7 +31,8 @@ const Masters = () => {
   const [showFilter, setShowFilter] = useState(false)
   const [minRating, setMinRating] = useState(0)
   const navigate = useNavigate()
-  const { masters } = useContext(AppContext)
+  const { masters, categories } = useContext(AppContext)
+  const specialities = categories.length ? categories.map(category => category.name) : FALLBACK_SPECIALITIES
 
   const applyFilter = () => {
     let list = speciality
@@ -75,7 +76,7 @@ const Masters = () => {
           <div className={`${showFilter ? 'block' : 'hidden'} sm:block mt-3 sm:mt-0 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm`}>
             <p className='mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400'>Направление</p>
             <div className='flex flex-col gap-1.5'>
-              {SPECIALITIES.map((value) => (
+              {specialities.map((value) => (
                 <button
                   key={value}
                   type='button'

@@ -10,6 +10,7 @@ const AppContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const [masters, setMasters] = useState([])
+    const [categories, setCategories] = useState([])
     const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : '')
     const [userData, setUserData] = useState(false)
 
@@ -25,6 +26,15 @@ const AppContextProvider = (props) => {
         } catch (error) {
             console.log(error)
             toast.error(error.message)
+        }
+    }
+
+    const getCategories = async () => {
+        try {
+            const { data } = await axios.get(backendUrl + '/api/category/active')
+            if (data.success) setCategories(data.categories)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -51,6 +61,7 @@ const AppContextProvider = (props) => {
 
     useEffect(() => {
         getMastersData()
+        getCategories()
     }, [])
 
     useEffect(() => {
@@ -61,6 +72,7 @@ const AppContextProvider = (props) => {
 
     const value = {
         masters, getMastersData,
+        categories, getCategories,
         currencySymbol,
         backendUrl,
         token, setToken,
