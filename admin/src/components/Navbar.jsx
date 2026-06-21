@@ -25,11 +25,11 @@ const Navbar = ({ onMenuClick }) => {
         <button
           onClick={onMenuClick}
           aria-label='Открыть меню'
-          className='md:hidden -ml-1 p-1.5 text-gray-600 hover:text-primary transition-colors'
+          className='group md:hidden -ml-1 flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-br from-primary to-[#8690ff] text-white shadow-lg shadow-primary/25 transition active:scale-95'
         >
-          <svg className='w-6 h-6' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
-            <path strokeLinecap='round' strokeLinejoin='round' d='M4 6h16M4 12h16M4 18h16' />
-          </svg>
+          <span className='h-0.5 w-5 rounded-full bg-white transition-transform group-hover:translate-x-0.5' />
+          <span className='h-0.5 w-3.5 self-start ml-3 rounded-full bg-white transition-all group-hover:w-5' />
+          <span className='h-0.5 w-5 rounded-full bg-white transition-transform group-hover:-translate-x-0.5' />
         </button>
         <img onClick={() => navigate('/')} className='w-28 sm:w-40 cursor-pointer' src={assets.logo} alt="Планета красоты" />
         <p className='border px-2.5 py-0.5 rounded-full border-gray-500 text-gray-600 whitespace-nowrap'>{aToken ? 'Администратор' : 'Мастер'}</p>

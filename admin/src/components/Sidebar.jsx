@@ -5,7 +5,7 @@ import { MasterContext } from '../context/MasterContext'
 import { AdminContext } from '../context/AdminContext'
 
 const linkClass = ({ isActive }) =>
-  `flex items-center gap-3 py-3.5 px-4 md:px-9 md:min-w-72 cursor-pointer transition-colors ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : 'hover:bg-gray-50'}`
+  `group mx-3 md:mx-0 mb-1 flex items-center gap-3 rounded-2xl md:rounded-none py-3.5 px-4 md:px-9 md:min-w-72 cursor-pointer transition-all duration-200 ${isActive ? 'bg-primary text-white shadow-lg shadow-primary/20 md:rounded-r-2xl [&>img]:brightness-0 [&>img]:invert' : 'hover:bg-[#F2F3FF] hover:text-primary hover:translate-x-1'}`
 
 const Sidebar = ({ isOpen, onClose }) => {
 
@@ -16,21 +16,34 @@ const Sidebar = ({ isOpen, onClose }) => {
     <>
       {/* Backdrop for mobile drawer */}
       {isOpen && (
-        <div onClick={onClose} className='fixed inset-0 bg-black/30 z-40 md:hidden' />
+        <div onClick={onClose} className='fixed inset-0 bg-slate-950/45 backdrop-blur-[3px] z-40 md:hidden animate-[fadeIn_200ms_ease-out]' />
       )}
 
-      <div className={`fixed md:static inset-y-0 left-0 z-50 md:z-auto w-64 md:w-auto md:min-h-screen bg-white border-r overflow-y-auto transition-transform duration-300 ease-in-out md:transition-none md:transform-none ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed md:static inset-y-0 left-0 z-50 md:z-auto flex flex-col w-[88%] max-w-[320px] md:w-auto md:max-w-none md:min-h-screen bg-white border-r overflow-y-auto rounded-r-[2rem] md:rounded-none shadow-2xl md:shadow-none transition-transform duration-300 ease-out md:transition-none md:transform-none ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
 
-        <div className='flex items-center justify-between px-4 py-3 border-b md:hidden'>
-          <p className='font-medium text-gray-700'>Меню</p>
-          <button onClick={onClose} aria-label='Закрыть меню' className='p-1 text-gray-500 hover:text-primary transition-colors'>
-            <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
+        <div className='relative overflow-hidden bg-gradient-to-br from-primary via-[#7280ff] to-[#98a1ff] px-5 pb-6 pt-5 text-white md:hidden'>
+          <div className='absolute -right-10 -top-12 h-36 w-36 rounded-full border-[24px] border-white/10' />
+          <div className='absolute -bottom-12 left-10 h-28 w-28 rounded-full bg-white/10 blur-xl' />
+          <div className='relative flex items-center justify-between'>
+            <div>
+              <p className='text-xs font-medium uppercase tracking-[0.2em] text-white/70'>Планета красоты</p>
+              <p className='mt-1 text-xl font-semibold'>Панель управления</p>
+            </div>
+            <button onClick={onClose} aria-label='Закрыть меню' className='flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/25 active:scale-95'>
+              <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
               <path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12' />
-            </svg>
-          </button>
+              </svg>
+            </button>
+          </div>
+          <div className='relative mt-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium backdrop-blur'>
+            <span className='h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_0_4px_rgba(110,231,183,0.15)]' />
+            {aToken ? 'Администратор' : 'Мастер'}
+          </div>
         </div>
 
-        {aToken && <ul className='text-[#515151] mt-2 md:mt-5' onClick={onClose}>
+        <div className='px-6 pb-2 pt-6 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 md:hidden'>Навигация</div>
+
+        {aToken && <ul className='text-[#515151] mt-1 md:mt-5 pb-6 md:pb-0' onClick={onClose}>
 
           <NavLink to={'/admin-dashboard'} className={linkClass}>
             <img className='min-w-5' src={assets.home_icon} alt='' />
@@ -68,7 +81,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           </NavLink>
         </ul>}
 
-        {mToken && <ul className='text-[#515151] mt-2 md:mt-5' onClick={onClose}>
+        {mToken && <ul className='text-[#515151] mt-1 md:mt-5 pb-6 md:pb-0' onClick={onClose}>
           <NavLink to={'/master-dashboard'} className={linkClass}>
             <img className='min-w-5' src={assets.home_icon} alt='' />
             <p>Дашборд</p>
@@ -94,7 +107,11 @@ const Sidebar = ({ isOpen, onClose }) => {
             <p>Статистика</p>
           </NavLink>
         </ul>}
-      </div>
+        <div className='mx-5 mb-5 mt-auto rounded-2xl bg-gradient-to-br from-[#F2F3FF] to-[#FAFAFF] p-4 md:hidden'>
+          <p className='text-sm font-semibold text-gray-700'>Всё под рукой</p>
+          <p className='mt-1 text-xs leading-5 text-gray-500'>Управляйте записями, профилем и расписанием в одном месте.</p>
+        </div>
+      </aside>
     </>
   )
 }

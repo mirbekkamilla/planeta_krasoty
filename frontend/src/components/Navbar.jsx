@@ -59,21 +59,79 @@ const Navbar = () => {
             </div>
             : <button onClick={() => navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block'>Создать аккаунт</button>
         }
-        <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
+        <button
+          type='button'
+          onClick={() => setShowMenu(true)}
+          className='md:hidden flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:border-primary hover:text-primary active:scale-95'
+          aria-label='Открыть меню'
+          aria-expanded={showMenu}
+        >
+          <img className='w-5' src={assets.menu_icon} alt="" />
+        </button>
 
         {/* ---- Mobile Menu ---- */}
-        <div className={`md:hidden ${showMenu ? 'fixed w-full' : 'h-0 w-0'} right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
-          <div className='flex items-center justify-between px-5 py-6'>
-            <img src={assets.logo} className='w-36' alt="" />
-            <img onClick={() => setShowMenu(false)} src={assets.cross_icon} className='w-7' alt="" />
+        <div className={`fixed inset-0 z-50 md:hidden ${showMenu ? 'pointer-events-auto' : 'pointer-events-none'}`} aria-hidden={!showMenu}>
+          <button
+            type='button'
+            onClick={() => setShowMenu(false)}
+            className={`absolute inset-0 bg-slate-950/35 backdrop-blur-[2px] transition-opacity duration-300 ${showMenu ? 'opacity-100' : 'opacity-0'}`}
+            aria-label='Закрыть меню'
+          />
+
+          <div className={`absolute right-0 top-0 flex h-full w-[88%] max-w-sm flex-col overflow-hidden rounded-l-[2rem] bg-white shadow-2xl transition-transform duration-300 ease-out ${showMenu ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className='absolute -right-16 -top-20 h-52 w-52 rounded-full bg-primary/10' />
+            <div className='relative flex items-center justify-between border-b border-gray-100 px-6 py-6'>
+              <img onClick={() => { navigate('/'); setShowMenu(false) }} src={assets.logo} className='w-36 cursor-pointer' alt='Планета красоты' />
+              <button
+                type='button'
+                onClick={() => setShowMenu(false)}
+                className='flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 transition hover:bg-primary/10 active:scale-95'
+                aria-label='Закрыть меню'
+              >
+                <img src={assets.cross_icon} className='w-4' alt="" />
+              </button>
+            </div>
+
+            <div className='relative px-6 pb-3 pt-7'>
+              <p className='text-xs font-semibold uppercase tracking-[0.22em] text-primary'>Навигация</p>
+            </div>
+            <ul className='relative flex flex-col gap-2 px-4 text-base font-medium'>
+              {[
+                ['/', 'ГЛАВНАЯ'],
+                ['/masters', 'МАСТЕРА'],
+                ['/about', 'О НАС'],
+                ['/contact', 'КОНТАКТЫ'],
+                ['/reviews', 'ОТЗЫВЫ']
+              ].map(([path, label]) => (
+                <li key={path}>
+                  <NavLink
+                    onClick={() => setShowMenu(false)}
+                    to={path}
+                    className={({ isActive }) => `group flex items-center justify-between rounded-2xl px-4 py-3.5 transition ${isActive ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-gray-700 hover:bg-gray-50 hover:text-primary'}`}
+                  >
+                    <span>{label}</span>
+                    <span className='text-xl font-light transition-transform group-hover:translate-x-1' aria-hidden='true'>›</span>
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+
+            <div className='relative mt-auto border-t border-gray-100 p-6'>
+              {token && userData ? (
+                <button onClick={() => { navigate('/my-profile'); setShowMenu(false) }} className='flex w-full items-center gap-3 rounded-2xl bg-gray-50 p-3 text-left transition hover:bg-primary/10'>
+                  <img className='h-11 w-11 rounded-full object-cover ring-2 ring-white' src={userData.image} alt="" />
+                  <span>
+                    <span className='block text-sm font-semibold text-gray-800'>Мой профиль</span>
+                    <span className='block text-xs text-gray-500'>Записи и настройки</span>
+                  </span>
+                </button>
+              ) : (
+                <button onClick={() => { navigate('/login'); setShowMenu(false) }} className='w-full rounded-2xl bg-primary px-5 py-3.5 font-medium text-white shadow-lg shadow-primary/25 transition hover:bg-[#5362ee] active:scale-[0.98]'>
+                  Создать аккаунт
+                </button>
+              )}
+            </div>
           </div>
-          <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium'>
-            <NavLink onClick={() => setShowMenu(false)} to='/'><p className='px-4 py-2 rounded full inline-block'>ГЛАВНАЯ</p></NavLink>
-            <NavLink onClick={() => setShowMenu(false)} to='/masters'><p className='px-4 py-2 rounded full inline-block'>МАСТЕРА</p></NavLink>
-            <NavLink onClick={() => setShowMenu(false)} to='/about'><p className='px-4 py-2 rounded full inline-block'>О НАС</p></NavLink>
-            <NavLink onClick={() => setShowMenu(false)} to='/contact'><p className='px-4 py-2 rounded full inline-block'>КОНТАКТЫ</p></NavLink>
-            <NavLink onClick={() => setShowMenu(false)} to='/reviews'><p className='px-4 py-2 rounded full inline-block'>ОТЗЫВЫ</p></NavLink>
-          </ul>
         </div>
       </div>
     </div>
