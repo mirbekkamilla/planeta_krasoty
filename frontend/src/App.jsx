@@ -18,10 +18,12 @@ import Reviews from './pages/Reviews'
 import MyFavorites from './pages/MyFavorites'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Vacancies from './pages/Vacancies'
+import ScrollToTop from './components/ScrollToTop'
 
 const App = () => {
   return (
     <div className='mx-4 sm:mx-[10%]'>
+      <ScrollToTop />
       <ToastContainer />
       <Navbar />
       <Routes>
