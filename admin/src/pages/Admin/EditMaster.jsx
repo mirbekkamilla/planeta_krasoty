@@ -27,6 +27,11 @@ const EditMaster = () => {
   const [customPortfolioCategory, setCustomPortfolioCategory] = useState('')
   const [newPortfolioDescription, setNewPortfolioDescription] = useState('')
   const [deletingImageId, setDeletingImageId] = useState('')
+  const [editingPortfolioItem, setEditingPortfolioItem] = useState(null)
+  const [editPortfolioCategory, setEditPortfolioCategory] = useState('')
+  const [editCustomPortfolioCategory, setEditCustomPortfolioCategory] = useState('')
+  const [editPortfolioDescription, setEditPortfolioDescription] = useState('')
+  const [savingPortfolioItem, setSavingPortfolioItem] = useState(false)
   const portfolioFileInputRef = useRef(null)
 
   useEffect(() => {
@@ -179,6 +184,56 @@ const EditMaster = () => {
       console.log(error)
     } finally {
       setDeletingImageId('')
+    }
+  }
+
+  const openPortfolioEditor = (item) => {
+    const categories = getPortfolioCategories(editData?.speciality)
+    const isKnownCategory = categories.includes(item.category)
+
+    setEditingPortfolioItem(item)
+    setEditPortfolioCategory(isKnownCategory ? item.category : CUSTOM_PORTFOLIO_CATEGORY)
+    setEditCustomPortfolioCategory(isKnownCategory ? '' : item.category)
+    setEditPortfolioDescription(item.description || '')
+  }
+
+  const closePortfolioEditor = () => {
+    if (savingPortfolioItem) return
+    setEditingPortfolioItem(null)
+    setEditCustomPortfolioCategory('')
+  }
+
+  const savePortfolioItem = async (e) => {
+    e.preventDefault()
+    const category = editPortfolioCategory === CUSTOM_PORTFOLIO_CATEGORY
+      ? editCustomPortfolioCategory.trim()
+      : editPortfolioCategory
+
+    if (!category) return toast.error('Введите название категории')
+
+    setSavingPortfolioItem(true)
+    try {
+      const { data } = await axios.patch(
+        backendUrl + `/api/admin/portfolio/${docId}/${editingPortfolioItem._id}`,
+        { category, description: editPortfolioDescription.trim() },
+        { headers: { aToken } }
+      )
+
+      if (data.success) {
+        setPortfolio(current => current.map(item =>
+          item._id === editingPortfolioItem._id ? data.portfolioItem : item
+        ))
+        toast.success(data.message)
+        setEditingPortfolioItem(null)
+        setEditCustomPortfolioCategory('')
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+      console.log(error)
+    } finally {
+      setSavingPortfolioItem(false)
     }
   }
 
@@ -536,11 +591,23 @@ const EditMaster = () => {
                   {item.description && (
                     <p className='text-white/80 text-xs text-center line-clamp-2'>{item.description}</p>
                   )}
-                  <button
-                    onClick={() => deletePortfolioImage(item._id)}
-                    disabled={deletingImageId === item._id}
-                    className='mt-1 flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50'
-                  >
+                  <div className='mt-1 flex items-center gap-1.5'>
+                    <button
+                      type='button'
+                      onClick={() => openPortfolioEditor(item)}
+                      className='flex items-center gap-1 bg-white hover:bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full transition-colors'
+                    >
+                      <svg className='w-3 h-3' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 13H9v-2.828l6.586-6.586z' />
+                      </svg>
+                      Изменить
+                    </button>
+                    <button
+                      type='button'
+                      onClick={() => deletePortfolioImage(item._id)}
+                      disabled={deletingImageId === item._id}
+                      className='flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50'
+                    >
                     {deletingImageId === item._id ? (
                       'Удаление...'
                     ) : (
@@ -551,7 +618,8 @@ const EditMaster = () => {
                         Удалить
                       </>
                     )}
-                  </button>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -560,6 +628,63 @@ const EditMaster = () => {
 
         <p className='text-xs text-gray-400 mt-3'>{portfolio.length} {portfolio.length === 1 ? 'работа' : portfolio.length < 5 ? 'работы' : 'работ'} в портфолио</p>
       </div>
+
+      {editingPortfolioItem && (
+        <div className='fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm' onMouseDown={closePortfolioEditor}>
+          <form onSubmit={savePortfolioItem} onMouseDown={e => e.stopPropagation()} className='w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl'>
+            <div className='mb-5 flex items-start justify-between gap-4'>
+              <div>
+                <h3 className='text-lg font-semibold text-gray-800'>Редактировать работу</h3>
+                <p className='mt-1 text-sm text-gray-500'>Измените категорию или описание фотографии.</p>
+              </div>
+              <button type='button' onClick={closePortfolioEditor} className='flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-gray-200' aria-label='Закрыть'>
+                <svg className='h-4 w-4' fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
+                  <path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12' />
+                </svg>
+              </button>
+            </div>
+
+            <div className='flex gap-4'>
+              <img src={editingPortfolioItem.imageUrl} alt='' className='h-24 w-24 flex-shrink-0 rounded-xl object-cover' />
+              <div className='flex min-w-0 flex-1 flex-col gap-2'>
+                <label className='text-xs font-medium text-gray-500'>Категория</label>
+                <select value={editPortfolioCategory} onChange={e => setEditPortfolioCategory(e.target.value)} className='w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-primary'>
+                  {getPortfolioCategories(editData?.speciality).map(category => <option key={category} value={category}>{category}</option>)}
+                  <option value={CUSTOM_PORTFOLIO_CATEGORY}>+ Своя категория</option>
+                </select>
+                {editPortfolioCategory === CUSTOM_PORTFOLIO_CATEGORY && (
+                  <input
+                    autoFocus
+                    type='text'
+                    value={editCustomPortfolioCategory}
+                    onChange={e => setEditCustomPortfolioCategory(e.target.value)}
+                    maxLength={60}
+                    placeholder='Название категории'
+                    className='w-full rounded-lg border border-primary px-3 py-2 text-sm outline-none'
+                  />
+                )}
+              </div>
+            </div>
+
+            <label className='mt-4 block text-xs font-medium text-gray-500'>Описание</label>
+            <textarea
+              value={editPortfolioDescription}
+              onChange={e => setEditPortfolioDescription(e.target.value)}
+              maxLength={200}
+              rows={3}
+              placeholder='Описание работы (необязательно)'
+              className='mt-2 w-full resize-none rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-primary'
+            />
+
+            <div className='mt-5 flex justify-end gap-2'>
+              <button type='button' onClick={closePortfolioEditor} disabled={savingPortfolioItem} className='rounded-xl border border-gray-200 px-4 py-2.5 text-sm text-gray-600 transition hover:bg-gray-50 disabled:opacity-50'>Отмена</button>
+              <button type='submit' disabled={savingPortfolioItem} className='rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50'>
+                {savingPortfolioItem ? 'Сохранение...' : 'Сохранить'}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       {/* Footer */}
       <div className='flex gap-3 justify-end mb-10'>

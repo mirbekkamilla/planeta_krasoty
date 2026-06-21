@@ -1,5 +1,5 @@
 import express from 'express';
-import { loginAdmin, appointmentsAdmin, appointmentCancel, addMaster, allMasters, adminDashboard, editMaster, archiveMaster, restoreMaster, getMasterById, changeMasterPassword, adminAddPortfolioImage, adminDeletePortfolioImage } from '../controllers/adminController.js';
+import { loginAdmin, appointmentsAdmin, appointmentCancel, addMaster, allMasters, adminDashboard, editMaster, archiveMaster, restoreMaster, getMasterById, changeMasterPassword, adminAddPortfolioImage, adminEditPortfolioItem, adminDeletePortfolioImage } from '../controllers/adminController.js';
 import { changeAvailablity } from '../controllers/masterController.js';
 import { getAllReviews, approveReview, adminDeleteReview } from '../controllers/reviewController.js';
 import { getAllJobApplications } from '../controllers/jobApplicationController.js';
@@ -21,6 +21,7 @@ adminRouter.post("/change-availability", authAdmin, changeAvailablity)
 adminRouter.get("/dashboard", authAdmin, adminDashboard)
 
 adminRouter.post("/portfolio", authAdmin, upload.single('image'), adminAddPortfolioImage)
+adminRouter.patch("/portfolio/:docId/:imageId", authAdmin, adminEditPortfolioItem)
 adminRouter.delete("/portfolio/:docId/:imageId", authAdmin, adminDeletePortfolioImage)
 
 adminRouter.get("/reviews", authAdmin, getAllReviews)

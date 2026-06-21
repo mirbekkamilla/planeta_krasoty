@@ -302,6 +302,41 @@ const adminAddPortfolioImage = async (req, res) => {
     }
 }
 
+// API for admin to edit a portfolio item
+const adminEditPortfolioItem = async (req, res) => {
+    try {
+        const { docId, imageId } = req.params
+        const category = String(req.body.category || '').trim()
+        const description = String(req.body.description || '').trim()
+
+        if (!category) {
+            return res.json({ success: false, message: 'Укажите категорию работы' })
+        }
+        if (category.length > 60 || description.length > 200) {
+            return res.json({ success: false, message: 'Категория или описание слишком длинные' })
+        }
+
+        const master = await masterModel.findById(docId)
+        if (!master) {
+            return res.json({ success: false, message: 'Мастер не найден' })
+        }
+
+        const item = master.portfolio.id(imageId)
+        if (!item) {
+            return res.json({ success: false, message: 'Работа в портфолио не найдена' })
+        }
+
+        item.category = category
+        item.description = description
+        await master.save()
+
+        res.json({ success: true, message: 'Категория обновлена', portfolioItem: item })
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+}
+
 // API for admin to remove a portfolio image from a master's profile
 const adminDeletePortfolioImage = async (req, res) => {
     try {
@@ -340,5 +375,6 @@ export {
     getMasterById,
     changeMasterPassword,
     adminAddPortfolioImage,
+    adminEditPortfolioItem,
     adminDeletePortfolioImage
 }
