@@ -1,6 +1,6 @@
 import React from 'react'
-import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import bookingBeautyTools from '../assets/booking_beauty_tools.webp'
 
 const Banner = () => {
 
@@ -23,11 +23,11 @@ const Banner = () => {
             </div>
 
             {/* ------- Mobile Image ------- */}
-            <img className='absolute bottom-[-8px] right-2 z-[1] w-52 drop-shadow-[0_18px_22px_rgba(30,41,120,0.3)] sm:right-8 sm:w-60 md:hidden' src={assets.appointment_img} alt='Мастер салона красоты' />
+            <img className='absolute bottom-[-14px] right-[-14px] z-[1] w-64 drop-shadow-[0_18px_22px_rgba(30,41,120,0.3)] sm:right-3 sm:w-72 md:hidden' src={bookingBeautyTools} alt='Инструменты и косметика салона красоты' />
 
             {/* ------- Right Side ------- */}
             <div className='hidden md:block md:w-1/2 lg:w-[370px] relative'>
-                <img className='absolute bottom-[-8px] right-0 w-full max-w-lg drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={assets.appointment_img} alt='Мастер салона красоты' />
+                <img className='absolute bottom-[-24px] right-[-24px] w-[420px] max-w-none drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={bookingBeautyTools} alt='Инструменты и косметика салона красоты' />
             </div>
         </div>
     )
