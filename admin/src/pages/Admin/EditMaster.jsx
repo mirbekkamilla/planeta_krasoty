@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 import { CUSTOM_PORTFOLIO_CATEGORY, getPortfolioCategories } from '../../constants/portfolioCategories'
 import useCategories from '../../hooks/useCategories'
+import { EXPERIENCE_OPTIONS, formatExperience } from '../../utils/experience'
 
 const EditMaster = () => {
   const categories = useCategories()
@@ -51,7 +52,7 @@ const EditMaster = () => {
           email: d.email || '',
           speciality: d.speciality,
           degree: d.degree,
-          experience: d.experience,
+          experience: formatExperience(d.experience),
           about: d.about,
           fees: d.fees,
           slotDuration: d.slotDuration || 60,
@@ -333,7 +334,7 @@ const EditMaster = () => {
               value={editData.experience}
               onChange={(e) => setEditData({ ...editData, experience: e.target.value })}
             >
-              {['1 год','2 года','3 года','4 года','5 лет','6 лет','7 лет','8 лет','9 лет','10+ лет'].map(v => (
+              {EXPERIENCE_OPTIONS.map(v => (
                 <option key={v} value={v}>{v}</option>
               ))}
             </select>

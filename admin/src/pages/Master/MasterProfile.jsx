@@ -4,6 +4,7 @@ import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { CUSTOM_PORTFOLIO_CATEGORY, getPortfolioCategories } from '../../constants/portfolioCategories'
+import { formatExperience } from '../../utils/experience'
 
 const MasterProfile = () => {
 
@@ -138,7 +139,7 @@ const MasterProfile = () => {
                     <p className='flex items-center gap-2 text-3xl font-medium text-gray-700'>{profileData.name}</p>
                     <div className='flex items-center gap-2 mt-1 text-gray-600'>
                         <p>{profileData.degree} — {profileData.speciality}</p>
-                        <button className='py-0.5 px-2 border text-xs rounded-full'>{profileData.experience}</button>
+                        <button className='py-0.5 px-2 border text-xs rounded-full'>{formatExperience(profileData.experience)}</button>
                     </div>
 
                     <div>

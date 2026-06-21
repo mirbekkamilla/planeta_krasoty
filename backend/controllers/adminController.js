@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import validator from "validator";
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/userModel.js";
+import normalizeExperience from "../utils/experience.js";
 
 // API for admin login
 const loginAdmin = async (req, res) => {
@@ -90,7 +91,7 @@ const addMaster = async (req, res) => {
             password: hashedPassword,
             speciality,
             degree,
-            experience,
+            experience: normalizeExperience(experience),
             about,
             fees,
             address: JSON.parse(address),
@@ -159,7 +160,7 @@ const editMaster = async (req, res) => {
         if (email) updateData.email = email
         if (speciality) updateData.speciality = speciality
         if (degree) updateData.degree = degree
-        if (experience) updateData.experience = experience
+        if (experience) updateData.experience = normalizeExperience(experience)
         if (about) updateData.about = about
         if (fees) updateData.fees = fees
         if (slotDuration) updateData.slotDuration = Number(slotDuration)

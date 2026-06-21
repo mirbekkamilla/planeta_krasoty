@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AdminContext } from '../../context/AdminContext'
+import { formatExperience } from '../../utils/experience'
 
 const MastersList = () => {
 
@@ -74,7 +75,7 @@ const MastersList = () => {
             <div className='p-4 flex flex-col flex-1'>
               <p className='text-[#262626] text-lg font-medium truncate'>{item.name}</p>
               <p className='text-[#5C5C5C] text-sm'>{item.speciality}</p>
-              <p className='text-[#5C5C5C] text-xs mt-1'>{item.experience}</p>
+              <p className='text-[#5C5C5C] text-xs mt-1'>{formatExperience(item.experience)}</p>
 
               {!item.archived && (
                 <div className='mt-2 flex items-center gap-1 text-sm'>
