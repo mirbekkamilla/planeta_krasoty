@@ -28,7 +28,7 @@ const Banner = () => {
 
             {/* ------- Right Side ------- */}
             <div className='hidden md:block md:w-1/2 lg:w-[370px] relative'>
-                <img className='absolute bottom-[-8px] right-0 w-full max-w-lg drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={appointmentImage} alt='Мастер салона красоты' />
+                <img className='absolute bottom-[-8px] right-0 w-[92%] max-w-[340px] drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={appointmentImage} alt='Мастер салона красоты' />
             </div>
         </div>
     )
