@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import bookingBeautyTools from '../assets/booking_beauty_tools.webp'
+import appointmentImage from '../assets/appointment_img.png'
 
 const Banner = () => {
 
@@ -27,7 +28,7 @@ const Banner = () => {
 
             {/* ------- Right Side ------- */}
             <div className='hidden md:block md:w-1/2 lg:w-[370px] relative'>
-                <img className='absolute bottom-[-24px] right-[-24px] w-[420px] max-w-none drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={bookingBeautyTools} alt='Инструменты и косметика салона красоты' />
+                <img className='absolute bottom-[-8px] right-0 w-full max-w-lg drop-shadow-[0_22px_30px_rgba(30,41,120,0.28)]' src={appointmentImage} alt='Мастер салона красоты' />
             </div>
         </div>
     )
